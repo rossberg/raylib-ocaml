@@ -2,12 +2,27 @@
    goes wrong with opening the file or patching, we want the execution to fail.
    There is no straying from the happy path. *)
 
-let patch file =
+let invert_hunk (hunk : Patch.hunk) : Patch.hunk =
+  { mine_start = hunk.their_start;
+    mine_len = hunk.their_len;
+    mine = hunk.their;
+    their_start = hunk.mine_start;
+    their_len = hunk.mine_len;
+    their = hunk.mine }
+
+let invert (patch : Patch.t) : Patch.t =
+  { patch with
+    hunks = List.map invert_hunk patch.hunks;
+    mine_no_nl = patch.their_no_nl;
+    their_no_nl = patch.mine_no_nl }
+
+let patch file reverse =
   let patch_ic = open_in_bin file in
   let s = really_input_string patch_ic (in_channel_length patch_ic) in
   close_in patch_ic;
 
   let patch = Patch.parse ~p:1 s |> List.hd in
+  let patch = if reverse then invert patch else patch in
   let target =
     match patch.operation with
     | Edit (a, _) -> String.trim a
@@ -18,7 +33,7 @@ let patch file =
   let input = really_input_string input_ic (in_channel_length input_ic) in
   close_in input_ic;
 
-  print_endline ("patching " ^ target);
+  print_endline ((if reverse then "reverse " else "") ^ "patching " ^ target);
 
   let output =
     match Patch.patch ~cleanly:true (Some input) patch with
@@ -30,4 +45,4 @@ let patch file =
   flush oc;
   close_out oc
 
-let () = patch (Array.get Sys.argv 1)
+let () = patch Sys.argv.(1) (Array.length Sys.argv > 2 && Sys.argv.(2) = "-r")
