@@ -71,9 +71,6 @@ val draw_circle_lines_v : Vector2.t -> float -> Color.t -> unit
 (** [draw_circle_lines_v center radius color] Draw circle outline (Vector
     version)*)
 
-val draw_circle_lines_ex : Vector2.t -> float -> float -> Color.t -> unit
-(** [draw_circle_lines_ex center radius thick color] Draw circle outline with line thickness*)
-
 val draw_ellipse : int -> int -> float -> float -> Color.t -> unit
 (** [draw_ellipse center_x center_y radius_h radius_v color] Draw ellipse*)
 
@@ -238,9 +235,9 @@ val get_spline_point_catmull_rom :
 (** [get_spline_point_catmull_rom p1 p2 p3 p4 t] Get (evaluate) spline point:
     Catmull-Rom*)
 
-val get_spline_point_bezier_quadratic :
+val get_spline_point_bezier_quad :
   Vector2.t -> Vector2.t -> Vector2.t -> float -> Vector2.t
-(** [get_spline_point_bezier_quadratic p1 c2 p3 t] Get (evaluate) spline point:
+(** [get_spline_point_bezier_quad p1 c2 p3 t] Get (evaluate) spline point:
     Quadratic Bezier*)
 
 val get_spline_point_bezier_cubic :

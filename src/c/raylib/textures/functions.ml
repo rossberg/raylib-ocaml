@@ -157,7 +157,7 @@ module Functions (F : Ctypes.FOREIGN) = struct
     foreign "ImageColorGrayscale" (ptr Image.t @-> returning void)
 
   let image_color_contrast =
-    foreign "ImageColorContrast" (ptr Image.t @-> int @-> returning void)
+    foreign "ImageColorContrast" (ptr Image.t @-> float @-> returning void)
 
   let image_color_brightness =
     foreign "ImageColorBrightness" (ptr Image.t @-> int @-> returning void)
@@ -210,10 +210,6 @@ module Functions (F : Ctypes.FOREIGN) = struct
       (ptr Image.t @-> Vector2.t @-> Vector2.t @-> int @-> Color.t
      @-> returning void)
 
-  let image_draw_line_strip =
-    foreign "ImageDrawLineStrip"
-      (ptr Image.t @-> ptr Vector2.t @-> int @-> Color.t @-> returning void)
-
   let image_draw_circle =
     foreign "ImageDrawCircle"
       (ptr Image.t @-> int @-> int @-> int @-> Color.t @-> returning void)
@@ -230,11 +226,6 @@ module Functions (F : Ctypes.FOREIGN) = struct
     foreign "ImageDrawCircleLinesV"
       (ptr Image.t @-> Vector2.t @-> int @-> Color.t @-> returning void)
 
-  let image_draw_circle_gradient =
-    foreign "ImageDrawCircleGradient"
-      (ptr Image.t @-> Vector2.t @-> int @-> Color.t @-> Color.t
-     @-> returning void)
-
   let image_draw_rectangle =
     foreign "ImageDrawRectangle"
       (ptr Image.t @-> int @-> int @-> int @-> int @-> Color.t
@@ -250,10 +241,6 @@ module Functions (F : Ctypes.FOREIGN) = struct
 
   let image_draw_rectangle_lines =
     foreign "ImageDrawRectangleLines"
-      (ptr Image.t @-> int @-> int @-> int @-> int @-> Color.t @-> returning void)
-
-  let image_draw_rectangle_lines_ex =
-    foreign "ImageDrawRectangleLinesEx"
       (ptr Image.t @-> Rectangle.t @-> int @-> Color.t @-> returning void)
 
   let image_draw_triangle =
@@ -261,8 +248,8 @@ module Functions (F : Ctypes.FOREIGN) = struct
       (ptr Image.t @-> Vector2.t @-> Vector2.t @-> Vector2.t @-> Color.t
      @-> returning void)
 
-  let image_draw_triangle_gradient =
-    foreign "ImageDrawTriangleGradient"
+  let image_draw_triangle_ex =
+    foreign "ImageDrawTriangleEx"
       (ptr Image.t @-> Vector2.t @-> Vector2.t @-> Vector2.t @-> Color.t
      @-> Color.t @-> Color.t @-> returning void)
 
@@ -279,19 +266,10 @@ module Functions (F : Ctypes.FOREIGN) = struct
     foreign "ImageDrawTriangleStrip"
       (ptr Image.t @-> ptr Vector2.t @-> int @-> Color.t @-> returning void)
 
-  let image_draw_image =
-    foreign "ImageDrawImage"
-      (ptr Image.t @-> Image.t @-> int @-> int @-> Color.t @-> returning void)
-
-  let image_draw_image_rec =
-    foreign "ImageDrawImageRec"
-      (ptr Image.t @-> Image.t @-> Rectangle.t @-> Vector2.t @-> Color.t
+  let image_draw =
+    foreign "ImageDraw"
+      (ptr Image.t @-> Image.t @-> Rectangle.t @-> Rectangle.t @-> Color.t
      @-> returning void)
-
-  let image_draw_image_pro =
-    foreign "ImageDrawImagePro"
-      (ptr Image.t @-> Image.t @-> Rectangle.t @-> Rectangle.t @-> Vector2.t
-     @-> float @-> Color.t @-> returning void)
 
   let image_draw_text =
     foreign "ImageDrawText"
